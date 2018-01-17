@@ -40,6 +40,8 @@ help:
 	@echo "                  to create an invalid RPM"
 	@echo "  fixtures/rpm-invalid-updateinfo"
 	@echo "                  to create RPM fixtures with updated updateinfo.xml"
+	@echo "  fixtures/long-filelists"
+	@echo "                  to create an RPM repo with an enormous filelists.xml"
 	@echo "  fixtures/long-updateinfo"
 	@echo "                  to create an RPM repo with an enormous updateinfo.xml"
 	@echo "  fixtures/rpm-mirrorlist-bad [base_url=...]"
@@ -113,6 +115,7 @@ fixtures: fixtures/docker \
 	fixtures/rpm-incomplete-other \
 	fixtures/rpm-invalid-rpm \
 	fixtures/rpm-invalid-updateinfo \
+	fixtures/rpm-long-filelists \
 	fixtures/rpm-long-updateinfo \
 	fixtures/rpm-mirrorlist-bad \
 	fixtures/rpm-mirrorlist-good \
@@ -200,6 +203,9 @@ fixtures/rpm-invalid-rpm:
 
 fixtures/rpm-invalid-updateinfo:
 	rpm/gen-patched-fixtures.sh $@ rpm/invalid-updateinfo.patch
+
+fixtures/rpm-long-filelists:
+	rpm/gen-long-filelists.sh $@
 
 fixtures/rpm-long-updateinfo:
 	rpm/gen-long-updateinfo.sh $@
