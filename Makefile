@@ -137,15 +137,14 @@ fixtures: fixtures/docker \
 	fixtures/drpm-signed \
 	fixtures/drpm-unsigned \
 	fixtures/file \
-	fixtures/file2 \
 	fixtures/file-invalid\
 	fixtures/file-large\
 	fixtures/file-many\
 	fixtures/file-mixed \
+	fixtures/file2 \
 	fixtures/puppet \
 	fixtures/python-pypi \
 	fixtures/rpm-alt-layout \
-	fixtures/rpm-with-modules \
 	fixtures/rpm-incomplete-filelists \
 	fixtures/rpm-incomplete-other \
 	fixtures/rpm-invalid-rpm \
@@ -163,12 +162,13 @@ fixtures: fixtures/docker \
 	fixtures/rpm-signed \
 	fixtures/rpm-unsigned \
 	fixtures/rpm-updated-updateinfo \
+	fixtures/rpm-with-modules \
 	fixtures/rpm-with-non-ascii \
 	fixtures/rpm-with-non-utf-8 \
-	fixtures/rpm-with-sha-512 \
-	fixtures/rpm-with-sha-1-modular \
-	fixtures/rpm-with-vendor \
 	fixtures/rpm-with-pulp-distribution \
+	fixtures/rpm-with-sha-1-modular \
+	fixtures/rpm-with-sha-512 \
+	fixtures/rpm-with-vendor \
 	fixtures/srpm-richnweak-deps \
 	fixtures/srpm-signed \
 	fixtures/srpm-unsigned
@@ -292,12 +292,12 @@ fixtures/rpm-with-non-ascii:
 fixtures/rpm-with-non-utf-8:
 	rpm/gen-rpm.sh $@ "rpm/assets-specs/$$(basename $@).spec"
 
-fixtures/rpm-with-sha-512:
-	rpm/gen-fixtures.sh --checksum-type "sha512" $@ rpm/assets
-
 fixtures/rpm-with-sha-1-modular:
 	rpm/gen-patched-fixtures.sh $@ rpm/modules-updateinfo.patch sha1
 	modifyrepo --mdtype=modules rpm/assets/modules.yaml "$@/repodata/"
+
+fixtures/rpm-with-sha-512:
+	rpm/gen-fixtures.sh --checksum-type "sha512" $@ rpm/assets
 
 fixtures/rpm-with-vendor:
 	rpm/gen-rpm-and-repo.sh $@ "rpm/assets-specs/$$(basename $@).spec"
