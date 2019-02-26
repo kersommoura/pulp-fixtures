@@ -30,7 +30,7 @@ EOF
 check_getopt
 temp=$(getopt \
     --options '' \
-    --longoptions number:, \
+    --longoptions number:, file-size: \
     --name "$script_name" \
     -- "$@")
 eval set -- "$temp"
@@ -44,6 +44,7 @@ fi
 while true; do
     case "$1" in
         --number) number="$2"; shift 2;;
+        --file-size) file_size="$2"; shift 2;;
         --) shift; break;;
         *) echo "Internal error! Encountered unexpected argument: $1"; exit 1;;
     esac
@@ -61,9 +62,10 @@ working_dir="$(mktemp --directory)"
 
 # Create the pseudo ISO files and update the PULP_MANIFEST with the generated
 # file information
+file_size=$"{file_size:-1K}"
 for ((i=0; i<number; i++)); do
     of="${working_dir}/$((i + 1)).iso"
-    dd if=/dev/urandom of="${of}" bs=1K count=1
+    dd if=/dev/urandom of="${of}" bs=${file_size} count=1
     echo "$(basename "${of}"),$(sha256sum "${of}" | awk '{print $1}'),$(stat -c '%s' "${of}")" \
     >> "${working_dir}/PULP_MANIFEST"
 done
